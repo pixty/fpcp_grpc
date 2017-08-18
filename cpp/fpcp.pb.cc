@@ -97,6 +97,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, frame_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, faces_),
   ~0u,  // no _has_bits_
@@ -124,8 +125,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] = {
   { 12, -1, sizeof(Rectangle)},
   { 21, -1, sizeof(AuthToken)},
   { 28, -1, sizeof(Scene)},
-  { 35, -1, sizeof(Frame)},
-  { 45, -1, sizeof(Face)},
+  { 36, -1, sizeof(Frame)},
+  { 46, -1, sizeof(Face)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -208,19 +209,20 @@ void AddDescriptorsImpl() {
       "dth\030\001 \001(\r\022\016\n\006height\030\002 \001(\r\"E\n\tRectangle\022\014"
       "\n\004left\030\001 \001(\005\022\013\n\003top\030\002 \001(\005\022\r\n\005right\030\003 \001(\005"
       "\022\016\n\006bottom\030\004 \001(\005\"+\n\tAuthToken\022\016\n\006access\030"
-      "\001 \001(\t\022\016\n\006secret\030\002 \001(\t\">\n\005Scene\022\032\n\005frame\030"
-      "\001 \001(\0132\013.fpcp.Frame\022\031\n\005faces\030\002 \003(\0132\n.fpcp"
-      ".Face\"\216\001\n\005Frame\022\n\n\002id\030\001 \001(\t\022\021\n\ttimestamp"
-      "\030\002 \001(\004\022\030\n\004size\030\003 \001(\0132\n.fpcp.Size\022\014\n\004data"
-      "\030\004 \001(\014\022\"\n\006format\030\005 \001(\0162\022.fpcp.Frame.Form"
-      "at\"\032\n\006Format\022\007\n\003RAW\020\000\022\007\n\003PNG\020\001\"1\n\004Face\022\n"
-      "\n\002id\030\001 \001(\t\022\035\n\004rect\030\002 \001(\0132\017.fpcp.Rectangl"
-      "e2h\n\025SceneProcessorService\022+\n\014authentica"
-      "te\022\017.fpcp.AuthToken\032\n.fpcp.Void\022\"\n\007onSce"
-      "ne\022\013.fpcp.Scene\032\n.fpcp.Voidb\006proto3"
+      "\001 \001(\t\022\016\n\006secret\030\002 \001(\t\"J\n\005Scene\022\n\n\002id\030\001 \001"
+      "(\t\022\032\n\005frame\030\002 \001(\0132\013.fpcp.Frame\022\031\n\005faces\030"
+      "\003 \003(\0132\n.fpcp.Face\"\216\001\n\005Frame\022\n\n\002id\030\001 \001(\t\022"
+      "\021\n\ttimestamp\030\002 \001(\004\022\030\n\004size\030\003 \001(\0132\n.fpcp."
+      "Size\022\014\n\004data\030\004 \001(\014\022\"\n\006format\030\005 \001(\0162\022.fpc"
+      "p.Frame.Format\"\032\n\006Format\022\007\n\003RAW\020\000\022\007\n\003PNG"
+      "\020\001\"1\n\004Face\022\n\n\002id\030\001 \001(\t\022\035\n\004rect\030\002 \001(\0132\017.f"
+      "pcp.Rectangle2h\n\025SceneProcessorService\022+"
+      "\n\014authenticate\022\017.fpcp.AuthToken\032\n.fpcp.V"
+      "oid\022\"\n\007onScene\022\013.fpcp.Scene\032\n.fpcp.Voidb"
+      "\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 555);
+      descriptor, 567);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "fpcp.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -1517,6 +1519,7 @@ void AuthToken::set_allocated_secret(::std::string* secret) {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Scene::kIdFieldNumber;
 const int Scene::kFrameFieldNumber;
 const int Scene::kFacesFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -1535,6 +1538,10 @@ Scene::Scene(const Scene& from)
       faces_(from.faces_),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.id().size() > 0) {
+    id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.id_);
+  }
   if (from.has_frame()) {
     frame_ = new ::fpcp::Frame(*from.frame_);
   } else {
@@ -1544,6 +1551,7 @@ Scene::Scene(const Scene& from)
 }
 
 void Scene::SharedCtor() {
+  id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   frame_ = NULL;
   _cached_size_ = 0;
 }
@@ -1554,6 +1562,7 @@ Scene::~Scene() {
 }
 
 void Scene::SharedDtor() {
+  id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) {
     delete frame_;
   }
@@ -1585,6 +1594,7 @@ Scene* Scene::New(::google::protobuf::Arena* arena) const {
 void Scene::Clear() {
 // @@protoc_insertion_point(message_clear_start:fpcp.Scene)
   faces_.Clear();
+  id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && frame_ != NULL) {
     delete frame_;
   }
@@ -1601,10 +1611,26 @@ bool Scene::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .fpcp.Frame frame = 1;
+      // string id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_id()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->id().data(), this->id().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "fpcp.Scene.id"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .fpcp.Frame frame = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_frame()));
         } else {
@@ -1613,10 +1639,10 @@ bool Scene::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .fpcp.Face faces = 2;
-      case 2: {
+      // repeated .fpcp.Face faces = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u)) {
+            static_cast< ::google::protobuf::uint8>(26u)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_faces()));
         } else {
@@ -1652,16 +1678,26 @@ void Scene::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .fpcp.Frame frame = 1;
-  if (this->has_frame()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, *this->frame_, output);
+  // string id = 1;
+  if (this->id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->id().data(), this->id().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "fpcp.Scene.id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->id(), output);
   }
 
-  // repeated .fpcp.Face faces = 2;
+  // .fpcp.Frame frame = 2;
+  if (this->has_frame()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->frame_, output);
+  }
+
+  // repeated .fpcp.Face faces = 3;
   for (unsigned int i = 0, n = this->faces_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->faces(i), output);
+      3, this->faces(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:fpcp.Scene)
@@ -1673,18 +1709,29 @@ void Scene::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .fpcp.Frame frame = 1;
+  // string id = 1;
+  if (this->id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->id().data(), this->id().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "fpcp.Scene.id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->id(), target);
+  }
+
+  // .fpcp.Frame frame = 2;
   if (this->has_frame()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        1, *this->frame_, deterministic, target);
+        2, *this->frame_, deterministic, target);
   }
 
-  // repeated .fpcp.Face faces = 2;
+  // repeated .fpcp.Face faces = 3;
   for (unsigned int i = 0, n = this->faces_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        2, this->faces(i), deterministic, target);
+        3, this->faces(i), deterministic, target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:fpcp.Scene)
@@ -1695,7 +1742,7 @@ size_t Scene::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:fpcp.Scene)
   size_t total_size = 0;
 
-  // repeated .fpcp.Face faces = 2;
+  // repeated .fpcp.Face faces = 3;
   {
     unsigned int count = this->faces_size();
     total_size += 1UL * count;
@@ -1706,7 +1753,14 @@ size_t Scene::ByteSizeLong() const {
     }
   }
 
-  // .fpcp.Frame frame = 1;
+  // string id = 1;
+  if (this->id().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->id());
+  }
+
+  // .fpcp.Frame frame = 2;
   if (this->has_frame()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1743,6 +1797,10 @@ void Scene::MergeFrom(const Scene& from) {
   (void) cached_has_bits;
 
   faces_.MergeFrom(from.faces_);
+  if (from.id().size() > 0) {
+
+    id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.id_);
+  }
   if (from.has_frame()) {
     mutable_frame()->::fpcp::Frame::MergeFrom(from.frame());
   }
@@ -1772,6 +1830,7 @@ void Scene::Swap(Scene* other) {
 }
 void Scene::InternalSwap(Scene* other) {
   faces_.InternalSwap(&other->faces_);
+  id_.Swap(&other->id_);
   std::swap(frame_, other->frame_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1784,7 +1843,60 @@ void Scene::InternalSwap(Scene* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // Scene
 
-// .fpcp.Frame frame = 1;
+// string id = 1;
+void Scene::clear_id() {
+  id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+const ::std::string& Scene::id() const {
+  // @@protoc_insertion_point(field_get:fpcp.Scene.id)
+  return id_.GetNoArena();
+}
+void Scene::set_id(const ::std::string& value) {
+  
+  id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:fpcp.Scene.id)
+}
+#if LANG_CXX11
+void Scene::set_id(::std::string&& value) {
+  
+  id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:fpcp.Scene.id)
+}
+#endif
+void Scene::set_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:fpcp.Scene.id)
+}
+void Scene::set_id(const char* value, size_t size) {
+  
+  id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:fpcp.Scene.id)
+}
+::std::string* Scene::mutable_id() {
+  
+  // @@protoc_insertion_point(field_mutable:fpcp.Scene.id)
+  return id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* Scene::release_id() {
+  // @@protoc_insertion_point(field_release:fpcp.Scene.id)
+  
+  return id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void Scene::set_allocated_id(::std::string* id) {
+  if (id != NULL) {
+    
+  } else {
+    
+  }
+  id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), id);
+  // @@protoc_insertion_point(field_set_allocated:fpcp.Scene.id)
+}
+
+// .fpcp.Frame frame = 2;
 bool Scene::has_frame() const {
   return this != internal_default_instance() && frame_ != NULL;
 }
@@ -1823,7 +1935,7 @@ void Scene::set_allocated_frame(::fpcp::Frame* frame) {
   // @@protoc_insertion_point(field_set_allocated:fpcp.Scene.frame)
 }
 
-// repeated .fpcp.Face faces = 2;
+// repeated .fpcp.Face faces = 3;
 int Scene::faces_size() const {
   return faces_.size();
 }
