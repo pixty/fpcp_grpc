@@ -43,9 +43,24 @@ message AuthToken {
 }
 
 message Scene {
+	// The scene identificator. FP changes it when considers new scene
     string id = 1;
-	Frame frame = 2;
-	repeated Face faces = 3;
+
+    // The timestampt indicastes when FP catches the scene
+    uint64 since = 2;
+
+    // Number of persons on the scene. Current frame can contain another 
+    // number of faces (equal or less than reported), this is because not
+    // all faces can be detected at the time
+    int32 persons = 3;
+	
+    // Current frame, contains image of the scene
+	Frame frame = 4;
+
+	// list of faces catched on the frame. This list can contain NOT ALL scene
+	// persons, but only that catched on the frame. so the number of faces in the list
+	// can be less than expected (persons) 
+	repeated Face faces = 5;
 }
 
 message Frame {

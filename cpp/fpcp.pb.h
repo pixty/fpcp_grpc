@@ -522,10 +522,10 @@ class Scene : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
 
   // accessors -------------------------------------------------------
 
-  // repeated .fpcp.Face faces = 3;
+  // repeated .fpcp.Face faces = 5;
   int faces_size() const;
   void clear_faces();
-  static const int kFacesFieldNumber = 3;
+  static const int kFacesFieldNumber = 5;
   const ::fpcp::Face& faces(int index) const;
   ::fpcp::Face* mutable_faces(int index);
   ::fpcp::Face* add_faces();
@@ -548,14 +548,26 @@ class Scene : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_id();
   void set_allocated_id(::std::string* id);
 
-  // .fpcp.Frame frame = 2;
+  // .fpcp.Frame frame = 4;
   bool has_frame() const;
   void clear_frame();
-  static const int kFrameFieldNumber = 2;
+  static const int kFrameFieldNumber = 4;
   const ::fpcp::Frame& frame() const;
   ::fpcp::Frame* mutable_frame();
   ::fpcp::Frame* release_frame();
   void set_allocated_frame(::fpcp::Frame* frame);
+
+  // uint64 since = 2;
+  void clear_since();
+  static const int kSinceFieldNumber = 2;
+  ::google::protobuf::uint64 since() const;
+  void set_since(::google::protobuf::uint64 value);
+
+  // int32 persons = 3;
+  void clear_persons();
+  static const int kPersonsFieldNumber = 3;
+  ::google::protobuf::int32 persons() const;
+  void set_persons(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:fpcp.Scene)
  private:
@@ -564,6 +576,8 @@ class Scene : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::RepeatedPtrField< ::fpcp::Face > faces_;
   ::google::protobuf::internal::ArenaStringPtr id_;
   ::fpcp::Frame* frame_;
+  ::google::protobuf::uint64 since_;
+  ::google::protobuf::int32 persons_;
   mutable int _cached_size_;
   friend struct protobuf_fpcp_2eproto::TableStruct;
 };
@@ -1085,7 +1099,35 @@ inline void Scene::set_allocated_id(::std::string* id) {
   // @@protoc_insertion_point(field_set_allocated:fpcp.Scene.id)
 }
 
-// .fpcp.Frame frame = 2;
+// uint64 since = 2;
+inline void Scene::clear_since() {
+  since_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 Scene::since() const {
+  // @@protoc_insertion_point(field_get:fpcp.Scene.since)
+  return since_;
+}
+inline void Scene::set_since(::google::protobuf::uint64 value) {
+  
+  since_ = value;
+  // @@protoc_insertion_point(field_set:fpcp.Scene.since)
+}
+
+// int32 persons = 3;
+inline void Scene::clear_persons() {
+  persons_ = 0;
+}
+inline ::google::protobuf::int32 Scene::persons() const {
+  // @@protoc_insertion_point(field_get:fpcp.Scene.persons)
+  return persons_;
+}
+inline void Scene::set_persons(::google::protobuf::int32 value) {
+  
+  persons_ = value;
+  // @@protoc_insertion_point(field_set:fpcp.Scene.persons)
+}
+
+// .fpcp.Frame frame = 4;
 inline bool Scene::has_frame() const {
   return this != internal_default_instance() && frame_ != NULL;
 }
@@ -1124,7 +1166,7 @@ inline void Scene::set_allocated_frame(::fpcp::Frame* frame) {
   // @@protoc_insertion_point(field_set_allocated:fpcp.Scene.frame)
 }
 
-// repeated .fpcp.Face faces = 3;
+// repeated .fpcp.Face faces = 5;
 inline int Scene::faces_size() const {
   return faces_.size();
 }
