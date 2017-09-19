@@ -68,16 +68,34 @@ message Frame {
 	string id = 1;
 	uint64 timestamp = 2;
 	Size size = 3;
-	bytes data = 4;
-	enum Format {
-		RAW = 0;
-		PNG = 1;
-	}
-	Format format = 5;
+	repeated Picture pictures = 4;
 }
 
 message Face {
 	string id = 1;
 	Rectangle rect = 2;
 	repeated float vector = 3;
+	repeated Picture pictures = 4;
+}
+
+// The picture message keeps information about a compressed picture
+message Picture {
+
+	// The picture size
+	Size size = 1;
+
+	// code one of the following: t, s, m, l, o
+	int32 sizeCode = 2;
+
+	enum Format {
+		RAW = 0;
+		PNG = 1;
+		JPG = 2;
+	}
+
+	// compression type
+	Format format = 3;
+
+	// actual picture data
+	bytes data = 4;
 }
