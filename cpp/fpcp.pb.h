@@ -75,13 +75,12 @@ void InitDefaults();
 enum Frame_Format {
   Frame_Format_RAW = 0,
   Frame_Format_PNG = 1,
-  Frame_Format_JPG = 2,
   Frame_Format_Frame_Format_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   Frame_Format_Frame_Format_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool Frame_Format_IsValid(int value);
 const Frame_Format Frame_Format_Format_MIN = Frame_Format_RAW;
-const Frame_Format Frame_Format_Format_MAX = Frame_Format_JPG;
+const Frame_Format Frame_Format_Format_MAX = Frame_Format_PNG;
 const int Frame_Format_Format_ARRAYSIZE = Frame_Format_Format_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Frame_Format_descriptor();
@@ -754,8 +753,6 @@ class Frame : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
     Frame_Format_RAW;
   static const Format PNG =
     Frame_Format_PNG;
-  static const Format JPG =
-    Frame_Format_JPG;
   static inline bool Format_IsValid(int value) {
     return Frame_Format_IsValid(value);
   }
@@ -958,15 +955,6 @@ class Face : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::fpcp::Rectangle* release_rect();
   void set_allocated_rect(::fpcp::Rectangle* rect);
 
-  // .fpcp.Frame picture = 4;
-  bool has_picture() const;
-  void clear_picture();
-  static const int kPictureFieldNumber = 4;
-  const ::fpcp::Frame& picture() const;
-  ::fpcp::Frame* mutable_picture();
-  ::fpcp::Frame* release_picture();
-  void set_allocated_picture(::fpcp::Frame* picture);
-
   // @@protoc_insertion_point(class_scope:fpcp.Face)
  private:
 
@@ -975,7 +963,6 @@ class Face : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   mutable int _vector_cached_byte_size_;
   ::google::protobuf::internal::ArenaStringPtr id_;
   ::fpcp::Rectangle* rect_;
-  ::fpcp::Frame* picture_;
   mutable int _cached_size_;
   friend struct protobuf_fpcp_2eproto::TableStruct;
 };
@@ -1651,46 +1638,6 @@ inline ::google::protobuf::RepeatedField< float >*
 Face::mutable_vector() {
   // @@protoc_insertion_point(field_mutable_list:fpcp.Face.vector)
   return &vector_;
-}
-
-// .fpcp.Frame picture = 4;
-inline bool Face::has_picture() const {
-  return this != internal_default_instance() && picture_ != NULL;
-}
-inline void Face::clear_picture() {
-  if (GetArenaNoVirtual() == NULL && picture_ != NULL) delete picture_;
-  picture_ = NULL;
-}
-inline const ::fpcp::Frame& Face::picture() const {
-  const ::fpcp::Frame* p = picture_;
-  // @@protoc_insertion_point(field_get:fpcp.Face.picture)
-  return p != NULL ? *p : *reinterpret_cast<const ::fpcp::Frame*>(
-      &::fpcp::_Frame_default_instance_);
-}
-inline ::fpcp::Frame* Face::mutable_picture() {
-  
-  if (picture_ == NULL) {
-    picture_ = new ::fpcp::Frame;
-  }
-  // @@protoc_insertion_point(field_mutable:fpcp.Face.picture)
-  return picture_;
-}
-inline ::fpcp::Frame* Face::release_picture() {
-  // @@protoc_insertion_point(field_release:fpcp.Face.picture)
-  
-  ::fpcp::Frame* temp = picture_;
-  picture_ = NULL;
-  return temp;
-}
-inline void Face::set_allocated_picture(::fpcp::Frame* picture) {
-  delete picture_;
-  picture_ = picture;
-  if (picture) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:fpcp.Face.picture)
 }
 
 #ifdef __GNUC__
