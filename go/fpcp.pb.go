@@ -218,10 +218,12 @@ func (m *Scene) GetFaces() []*Face {
 }
 
 type Frame struct {
-	Id        string     `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	Timestamp uint64     `protobuf:"varint,2,opt,name=timestamp" json:"timestamp,omitempty"`
-	Size      *Size      `protobuf:"bytes,3,opt,name=size" json:"size,omitempty"`
-	Pictures  []*Picture `protobuf:"bytes,4,rep,name=pictures" json:"pictures,omitempty"`
+	Id        string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	Timestamp uint64 `protobuf:"varint,2,opt,name=timestamp" json:"timestamp,omitempty"`
+	// the frame size taken from the camera. Pictures can be resized, but this one is true size
+	Size *Size `protobuf:"bytes,3,opt,name=size" json:"size,omitempty"`
+	// images of the frame, can be encoded in different sizes and compression types
+	Pictures []*Picture `protobuf:"bytes,4,rep,name=pictures" json:"pictures,omitempty"`
 }
 
 func (m *Frame) Reset()                    { *m = Frame{} }
@@ -257,10 +259,14 @@ func (m *Frame) GetPictures() []*Picture {
 	return nil
 }
 
+// Face on the frame. Can contain list of pictures encoded into different sizes
 type Face struct {
-	Id       string     `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	Rect     *Rectangle `protobuf:"bytes,2,opt,name=rect" json:"rect,omitempty"`
-	Vector   []float32  `protobuf:"fixed32,3,rep,packed,name=vector" json:"vector,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	// The position of the face on the origianl frame
+	Rect   *Rectangle `protobuf:"bytes,2,opt,name=rect" json:"rect,omitempty"`
+	Vector []float32  `protobuf:"fixed32,3,rep,packed,name=vector" json:"vector,omitempty"`
+	// Pictures of the face. Can be empty. The pictures are cuts from the frame and their size
+	// can be different that the original
 	Pictures []*Picture `protobuf:"bytes,4,rep,name=pictures" json:"pictures,omitempty"`
 }
 
@@ -299,7 +305,7 @@ func (m *Face) GetPictures() []*Picture {
 
 // The picture message keeps information about a compressed picture
 type Picture struct {
-	// The picture size
+	// The picture size.
 	Size *Size `protobuf:"bytes,1,opt,name=size" json:"size,omitempty"`
 	// code one of the following: t, s, m, l, o
 	SizeCode int32 `protobuf:"varint,2,opt,name=sizeCode" json:"sizeCode,omitempty"`
