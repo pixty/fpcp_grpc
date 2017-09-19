@@ -141,6 +141,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Face, id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Face, rect_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Face, vector_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Face, picture_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(Void)},
@@ -208,6 +209,8 @@ void TableStruct::InitDefaultsImpl() {
       ::fpcp::Size::internal_default_instance());
   _Face_default_instance_._instance.get_mutable()->rect_ = const_cast< ::fpcp::Rectangle*>(
       ::fpcp::Rectangle::internal_default_instance());
+  _Face_default_instance_._instance.get_mutable()->picture_ = const_cast< ::fpcp::Frame*>(
+      ::fpcp::Frame::internal_default_instance());
 }
 
 void InitDefaults() {
@@ -225,18 +228,19 @@ void AddDescriptorsImpl() {
       "\001 \001(\t\022\016\n\006secret\030\002 \001(\t\"j\n\005Scene\022\n\n\002id\030\001 \001"
       "(\t\022\r\n\005since\030\002 \001(\004\022\017\n\007persons\030\003 \001(\005\022\032\n\005fr"
       "ame\030\004 \001(\0132\013.fpcp.Frame\022\031\n\005faces\030\005 \003(\0132\n."
-      "fpcp.Face\"\216\001\n\005Frame\022\n\n\002id\030\001 \001(\t\022\021\n\ttimes"
+      "fpcp.Face\"\227\001\n\005Frame\022\n\n\002id\030\001 \001(\t\022\021\n\ttimes"
       "tamp\030\002 \001(\004\022\030\n\004size\030\003 \001(\0132\n.fpcp.Size\022\014\n\004"
       "data\030\004 \001(\014\022\"\n\006format\030\005 \001(\0162\022.fpcp.Frame."
-      "Format\"\032\n\006Format\022\007\n\003RAW\020\000\022\007\n\003PNG\020\001\"A\n\004Fa"
-      "ce\022\n\n\002id\030\001 \001(\t\022\035\n\004rect\030\002 \001(\0132\017.fpcp.Rect"
-      "angle\022\016\n\006vector\030\003 \003(\0022h\n\025SceneProcessorS"
-      "ervice\022+\n\014authenticate\022\017.fpcp.AuthToken\032"
-      "\n.fpcp.Void\022\"\n\007onScene\022\013.fpcp.Scene\032\n.fp"
-      "cp.Voidb\006proto3"
+      "Format\"#\n\006Format\022\007\n\003RAW\020\000\022\007\n\003PNG\020\001\022\007\n\003JP"
+      "G\020\002\"_\n\004Face\022\n\n\002id\030\001 \001(\t\022\035\n\004rect\030\002 \001(\0132\017."
+      "fpcp.Rectangle\022\016\n\006vector\030\003 \003(\002\022\034\n\007pictur"
+      "e\030\004 \001(\0132\013.fpcp.Frame2h\n\025SceneProcessorSe"
+      "rvice\022+\n\014authenticate\022\017.fpcp.AuthToken\032\n"
+      ".fpcp.Void\022\"\n\007onScene\022\013.fpcp.Scene\032\n.fpc"
+      "p.Voidb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 615);
+      descriptor, 654);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "fpcp.proto", &protobuf_RegisterTypes);
 }
@@ -263,6 +267,7 @@ bool Frame_Format_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -272,6 +277,7 @@ bool Frame_Format_IsValid(int value) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const Frame_Format Frame::RAW;
 const Frame_Format Frame::PNG;
+const Frame_Format Frame::JPG;
 const Frame_Format Frame::Format_MIN;
 const Frame_Format Frame::Format_MAX;
 const int Frame::Format_ARRAYSIZE;
@@ -2807,6 +2813,7 @@ void Frame::set_format(::fpcp::Frame_Format value) {
 const int Face::kIdFieldNumber;
 const int Face::kRectFieldNumber;
 const int Face::kVectorFieldNumber;
+const int Face::kPictureFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Face::Face()
@@ -2832,12 +2839,19 @@ Face::Face(const Face& from)
   } else {
     rect_ = NULL;
   }
+  if (from.has_picture()) {
+    picture_ = new ::fpcp::Frame(*from.picture_);
+  } else {
+    picture_ = NULL;
+  }
   // @@protoc_insertion_point(copy_constructor:fpcp.Face)
 }
 
 void Face::SharedCtor() {
   id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  rect_ = NULL;
+  ::memset(&rect_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&picture_) -
+      reinterpret_cast<char*>(&rect_)) + sizeof(picture_));
   _cached_size_ = 0;
 }
 
@@ -2849,6 +2863,7 @@ Face::~Face() {
 void Face::SharedDtor() {
   id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete rect_;
+  if (this != internal_default_instance()) delete picture_;
 }
 
 void Face::SetCachedSize(int size) const {
@@ -2886,6 +2901,10 @@ void Face::Clear() {
     delete rect_;
   }
   rect_ = NULL;
+  if (GetArenaNoVirtual() == NULL && picture_ != NULL) {
+    delete picture_;
+  }
+  picture_ = NULL;
   _internal_metadata_.Clear();
 }
 
@@ -2946,6 +2965,18 @@ bool Face::MergePartialFromCodedStream(
         break;
       }
 
+      // .fpcp.Frame picture = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_picture()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -2997,6 +3028,12 @@ void Face::SerializeWithCachedSizes(
       this->vector().data(), this->vector_size(), output);
   }
 
+  // .fpcp.Frame picture = 4;
+  if (this->has_picture()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, *this->picture_, output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -3040,6 +3077,13 @@ void Face::SerializeWithCachedSizes(
             _vector_cached_byte_size_), target);
     target = ::google::protobuf::internal::WireFormatLite::
       WriteFloatNoTagToArray(this->vector_, target);
+  }
+
+  // .fpcp.Frame picture = 4;
+  if (this->has_picture()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        4, *this->picture_, deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -3089,6 +3133,13 @@ size_t Face::ByteSizeLong() const {
         *this->rect_);
   }
 
+  // .fpcp.Frame picture = 4;
+  if (this->has_picture()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->picture_);
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -3126,6 +3177,9 @@ void Face::MergeFrom(const Face& from) {
   if (from.has_rect()) {
     mutable_rect()->::fpcp::Rectangle::MergeFrom(from.rect());
   }
+  if (from.has_picture()) {
+    mutable_picture()->::fpcp::Frame::MergeFrom(from.picture());
+  }
 }
 
 void Face::CopyFrom(const ::google::protobuf::Message& from) {
@@ -3155,6 +3209,7 @@ void Face::InternalSwap(Face* other) {
   vector_.InternalSwap(&other->vector_);
   id_.Swap(&other->id_);
   swap(rect_, other->rect_);
+  swap(picture_, other->picture_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
@@ -3288,6 +3343,46 @@ Face::vector() const {
 Face::mutable_vector() {
   // @@protoc_insertion_point(field_mutable_list:fpcp.Face.vector)
   return &vector_;
+}
+
+// .fpcp.Frame picture = 4;
+bool Face::has_picture() const {
+  return this != internal_default_instance() && picture_ != NULL;
+}
+void Face::clear_picture() {
+  if (GetArenaNoVirtual() == NULL && picture_ != NULL) delete picture_;
+  picture_ = NULL;
+}
+const ::fpcp::Frame& Face::picture() const {
+  const ::fpcp::Frame* p = picture_;
+  // @@protoc_insertion_point(field_get:fpcp.Face.picture)
+  return p != NULL ? *p : *reinterpret_cast<const ::fpcp::Frame*>(
+      &::fpcp::_Frame_default_instance_);
+}
+::fpcp::Frame* Face::mutable_picture() {
+  
+  if (picture_ == NULL) {
+    picture_ = new ::fpcp::Frame;
+  }
+  // @@protoc_insertion_point(field_mutable:fpcp.Face.picture)
+  return picture_;
+}
+::fpcp::Frame* Face::release_picture() {
+  // @@protoc_insertion_point(field_release:fpcp.Face.picture)
+  
+  ::fpcp::Frame* temp = picture_;
+  picture_ = NULL;
+  return temp;
+}
+void Face::set_allocated_picture(::fpcp::Frame* picture) {
+  delete picture_;
+  picture_ = picture;
+  if (picture) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:fpcp.Face.picture)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
