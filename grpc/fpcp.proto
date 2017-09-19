@@ -72,7 +72,6 @@ message Frame {
 	enum Format {
 		RAW = 0;
 		PNG = 1;
-		JPG = 2;
 	}
 	Format format = 5;
 }
@@ -81,8 +80,4 @@ message Face {
 	string id = 1;
 	Rectangle rect = 2;
 	repeated float vector = 3;
-
-	// Contains piecture of the face. picture.Size can be bigger than the rectangle, it
-	// means a padding was added when the image was built
-	Frame picture = 4;
 }
