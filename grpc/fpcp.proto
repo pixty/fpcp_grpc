@@ -67,17 +67,45 @@ message Scene {
 message Frame {
 	string id = 1;
 	uint64 timestamp = 2;
+
+	// the frame size taken from the camera. Pictures can be resized, but this one is true size
 	Size size = 3;
-	bytes data = 4;
+
+	// images of the frame, can be encoded in different sizes and compression types
+	repeated Picture pictures = 4;
+}
+
+// Face on the frame. Can contain list of pictures encoded into different sizes
+message Face {
+	string id = 1;
+
+	// The position of the face on the origianl frame 
+	Rectangle rect = 2;
+	repeated float vector = 3;
+
+	// Pictures of the face. Can be empty. The pictures are cuts from the frame and their size
+	// can be different that the original 
+	repeated Picture pictures = 4;
+}
+
+// The picture message keeps information about a compressed picture
+message Picture {
+
+	// The picture size.
+	Size size = 1;
+
+	// code one of the following: t, s, m, l, o
+	int32 sizeCode = 2;
+
 	enum Format {
 		RAW = 0;
 		PNG = 1;
+		JPG = 2;
 	}
-	Format format = 5;
-}
 
-message Face {
-	string id = 1;
-	Rectangle rect = 2;
-	repeated float vector = 3;
+	// compression type
+	Format format = 3;
+
+	// actual picture data
+	bytes data = 4;
 }
